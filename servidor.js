@@ -16,6 +16,10 @@ app.get('/productos', (req, res)=> {
     Stock.getAll().then(v => res.send((JSON.parse(v))))
 })
 
+app.get('/', (req, res)=> {
+    res.send('<h1> Inicio </h1>')
+})
+
 app.get('/productos/:productoId', (req, res)=> {
     Stock.getById(parseInt(req.params.productoId))
     .then(v => res.send((JSON.parse(v))))
