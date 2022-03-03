@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Celular",
+    "price": 200,
+    "thumbnail": "url/imagen",
+    "id": 1
+  },
+  {
+    "title": "Teclado",
+    "price": 200,
+    "thumbnail": "url/imagen",
+    "id": 2
+  },
+  {
+    "title": "Monitor",
+    "price": 200,
+    "thumbnail": "url/imagen",
+    "id": 3
+  }
+]
