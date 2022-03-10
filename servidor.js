@@ -2,6 +2,26 @@ const express = require('express');
 
 const app = express();
 const PORT = 8080;
+const router = express.Router()
+
+app.use(express.static('public'))
+
+router.use(express.urlencoded({ extended: true}))
+router.use(express.json())
+const server = app.listen(PORT, () => {
+    console.log('Servidor HTTP escuchando en el puerto ' + server.address().port)
+})
+
+server.on("error", (error) => console.log('Error en servidor' + error))
+
+app.use('/api/productos', router)
+
+module.exports = router
+
+/* const express = require('express');
+
+const app = express();
+const PORT = 8080;
 
 const server = app.listen(PORT, ()=>{
     console.log('Servidor HTTP escuchando en el puerto ' + server.address().port)
@@ -64,4 +84,4 @@ app.get('/productoRandom', (req, res)=> {
                  <div> Imagen: ${p.thumbnail} </div>`)})
         .catch(err => res.send('No se encontró el producto'))
     })
-})
+}) */
