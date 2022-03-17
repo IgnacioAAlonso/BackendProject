@@ -1,0 +1,34 @@
+  <div class="container mt-3">
+    <div class="jumbotron">
+      <h1 style="color: blue">Ingrese el Producto</h1>
+      <br />
+
+      <form action="/productos" method="POST">
+        <div class="form-group">
+          <label for="nombre"><b>Nombre</b></label>
+          <input id="nombre" class="form-control" type="text" name="nombre" />
+        </div>
+
+        <div class="form-group">
+          <label for="precio"><b>Precio</b></label>
+          <input id="precio" class="form-control" type="number" name="precio" />
+        </div>
+
+        <div class="form-group">
+          <label for="imagen"><b>Imagen</b></label>
+          <input id="imagen" class="form-control" type="text" name="imagen"/>
+        </div>
+
+        <div class="row justify-content-between">
+          <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Enviar</button>
+          <a class="col-3 btn btn-info mt-3 mb-5" href="/productos"> Ver Productos </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  function myFunction(evt) {
+    evt.preventDefault();
+  }
+</script>

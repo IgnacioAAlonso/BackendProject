@@ -1,2 +1,5 @@
 # dependencies
 /node_modules
+/Desafio 10/Hbs/node_modules
+/Desafio 10/Ejs/node_modules
+/Desafio 10/Pug/node_modules
