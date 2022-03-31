@@ -1,0 +1,11 @@
+[
+  {
+    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>"
+  },
+  {
+    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:33:02 ):</TT>\n            <I style=\"color: green\"> hola </I>"
+  },
+  {
+    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:34:06 ):</TT>\n            <I style=\"color: green\"> hola </I>"
+  }
+]

@@ -1,13 +1,9 @@
-<header>
-    <%- include('./partials/encabezado.ejs') %>
-</header>
-<body>
   <div class="container mt-3">
     <div class="jumbotron">
       <h1 style="color: blue">Ingrese el Producto</h1>
       <br />
 
-      <form action="/productos" method="POST">
+      <form onsubmit="addProduct(this)">
         <div class="form-group">
           <label for="nombre"><b>Nombre</b></label>
           <input id="nombre" class="form-control" type="text" name="nombre" />
@@ -25,10 +21,32 @@
 
         <div class="row justify-content-between">
           <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Enviar</button>
-          <a class="col-3 btn btn-info mt-3 mb-5" href="/productos"> Ver Productos </a>
         </div>
       </form>
+
+        <h1 style="color: blue">Productos: </h1>
+        <div class="table-responsive">
+            <div class="table table-dark">
+                <ul class="ulTitle"> <li>Nombre</li> <li>Precio</li> <li>Imagen</li> </ul>
+                <div id="productos"/>
+            </div>
+        </div>
+
+        <form onsubmit="addMessage(this)">
+            <input type="email" id="email" placeholder="Tu mail...">
+
+            <div class="mensajes" id="mensajes"></div>
+
+            <input type="text" id="texto" placeholder="Tu comentario...">
+            <input type="submit" value="Enviar">
+        </form>
+      {{!-- {{ include('./datos.hbs',  productos)}}--}}
+      {{!-- {{ include "some-other-partial.hbs" "path/to/data.json" }} --}}
     </div>
   </div>
-</body>
-<%- include('./partials/pie.ejs') %>
+
+<script>
+  function myFunction(evt) {
+    evt.preventDefault();
+  }
+</script>
