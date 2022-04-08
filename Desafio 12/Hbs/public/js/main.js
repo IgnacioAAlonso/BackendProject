@@ -1,18 +1,8 @@
 const socket = io.connect();
 
-/* function render(data){
+function render(data) {
     const html = data.map((elem, index) => {
-        return(`<div>
-        <strong>${elem.author}</strong>:
-        <em>${elem.text}</em>
-        </div>`)
-    }).join(" ");
-    document.getElementById('mensajes').innerHTML = html;
-} */
-
-function render(data){
-    const html = data.map((elem, index) => {
-        return(`
+        return (`
         <ul class="ulBody">
         <li> ${elem.nombre} </li>
         <li> ${elem.precio} </td>
@@ -23,37 +13,37 @@ function render(data){
     document.getElementById('productos').innerHTML = html;
 }
 
-function render2(data){
+/* function render2(data) {
     const html = data.map((elem, index) => {
-        return(`<div>
+        return (`<div>
         <p>${elem.texto}</p>
         </div>`)
     }).join(" ");
     document.getElementById('mensajes').innerHTML = html;
-} 
+} */
+socket.on('productos', function (data) { render(data) })
+/* socket.on('messages', function (data) { render2(data) }) */
 
-socket.on('productos', function(data){ render(data) })
-socket.on('messages', function(data){ render2(data) })
-
-function addProduct(e){
-    const mensaje={
+function addProduct(e) {
+    const mensaje = {
         nombre: document.getElementById('nombre').value,
         precio: document.getElementById('precio').value,
         imagen: document.getElementById('imagen').value
     }
+    console.log('entrando')
     socket.emit('new-product', mensaje)
     return false
 }
 
-function addMessage(e){
-    var e = document.getElementById('email').value; 
-    if (e){
-        var currentdate = new Date();   
-        const mensaje={
+/* function addMessage(e) {
+    var e = document.getElementById('email').value;
+    if (e) {
+        var currentdate = new Date();
+        const mensaje = {
             texto: ` <strong style="color: blue">${document.getElementById('email').value}</strong> <TT style="color: brown">( ${currentdate.toLocaleString()} ):</TT>
             <I style="color: green"> ${document.getElementById('texto').value} </I>`
         }
         socket.emit('new-message', mensaje)
     }
     return false
-}
+} */

@@ -1,11 +1,17 @@
 [
   {
-    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>"
+    "nombre": "Producto",
+    "precio": "155",
+    "imagen": "alfa"
   },
   {
-    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:33:02 ):</TT>\n            <I style=\"color: green\"> hola </I>"
+    "nombre": "Producto2",
+    "precio": "3125",
+    "imagen": "alfa"
   },
   {
-    "texto": " <strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:34:06 ):</TT>\n            <I style=\"color: green\"> hola </I>"
+    "nombre": "Producto3",
+    "precio": "1255",
+    "imagen": "alfa"
   }
 ]
