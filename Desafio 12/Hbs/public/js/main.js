@@ -1,5 +1,20 @@
 const socket = io.connect();
 
+window.onload = function () {
+    const formulario = document.getElementById('formularioPrueba').addEventListener("click", function (event) {
+        event.preventDefault()
+        const usuario = document.getElementById('contraseña').value
+        if (usuario === 'adm') {
+            var fm = document.getElementById('formularioAdm');
+            var fmDel = document.getElementById('formularioAdmDel');
+            fm.classList.remove('desactivado');
+            fmDel.classList.remove('desactivado');
+            fm.classList.add('activado');
+            fmDel.classList.add('activado');
+        }
+    });
+}
+
 function render(data) {
     const html = data.map((elem, index) => {
         return (`
@@ -10,10 +25,13 @@ function render(data) {
         </ul>
             `)
     }).join(" ");
-    document.getElementById('productos').innerHTML = html;
+    document
+        .getElementById('productos').innerHTML = html;
 }
 
-/* function render2(data) {
+/*
+
+function render2(data) {
     const html = data.map((elem, index) => {
         return (`<div>
         <p>${elem.texto}</p>
@@ -22,9 +40,10 @@ function render(data) {
     document.getElementById('mensajes').innerHTML = html;
 } */
 socket.on('productos', function (data) { render(data) })
+socket.on('productoId', function (data) { render(data) })
 /* socket.on('messages', function (data) { render2(data) }) */
 
-function addProduct(e) {
+/* function addProduct(e) {
     const mensaje = {
         nombre: document.getElementById('nombre').value,
         precio: document.getElementById('precio').value,
@@ -33,6 +52,17 @@ function addProduct(e) {
     console.log('entrando')
     socket.emit('new-product', mensaje)
     return false
+} */
+
+function permisosAdm(e) {
+    const usuario = document.getElementById('contraseña').value
+    console.log(usuario)
+    if (usuario === 'adm') {
+        var fm = document.getElementById('formularioAdm');
+        fm.classList.remove('desactivado');
+        fm.classList.add('activado');
+    }
+    // return false
 }
 
 /* function addMessage(e) {

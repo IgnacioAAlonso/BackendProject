@@ -2,16 +2,61 @@
   {
     "nombre": "Producto",
     "precio": "155",
-    "imagen": "alfa"
+    "imagen": "alfa",
+    "id": 1
   },
   {
     "nombre": "Producto2",
     "precio": "3125",
-    "imagen": "alfa"
+    "imagen": "alfa",
+    "id": 2
   },
   {
     "nombre": "Producto3",
     "precio": "1255",
-    "imagen": "alfa"
+    "imagen": "alfa",
+    "id": 3
+  },
+  {
+    "nombre": "Producto",
+    "precio": "1555",
+    "imagen": "alfa",
+    "id": 4
+  },
+  {
+    "nombre": "Producto",
+    "precio": "222",
+    "imagen": "alfa",
+    "id": 5
+  },
+  {
+    "nombre": "ProductoPrueba",
+    "precio": "10101",
+    "imagen": "alfa",
+    "id": 6
+  },
+  {
+    "nombre": "Producto244",
+    "precio": "25551",
+    "imagen": "alfa",
+    "id": 7
+  },
+  {
+    "nombre": "Producto245",
+    "precio": "25552",
+    "imagen": "alfa",
+    "id": 8
+  },
+  {
+    "nombre": "ProductoID",
+    "precio": "1111111",
+    "imagen": "img",
+    "id": 9
+  },
+  {
+    "nombre": "ProductoPrecio",
+    "precio": 9090,
+    "imagen": "alfa",
+    "id": 10
   }
 ]

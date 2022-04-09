@@ -1,9 +1,32 @@
   <div class="container mt-3">
     <div class="jumbotron">
+
+      <h1 style="color: blue">Productos: </h1>
+        <div class="table-responsive">
+            <div class="table table-dark">
+                <ul class="ulTitle"> <li>Nombre</li> <li>Precio</li> <li>Imagen</li> </ul>
+                <div id="productos"/>
+            </div>
+        </div>
+
+      <h1 style="color: blue">Permiso de Administrador</h1>
+      <br />
+
+      <form id="formularioPrueba" onsubmit="permisosAdm(this)">
+        <div class="form-group">
+          <label for="nombre"><b>Contraseña</b></label>
+          <input id="contraseña" class="form-control" type="text" name="contraseña" />
+        </div>
+
+        <div class="row justify-content-between">
+          <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Enviar</button>
+        </div>
+      </form>
+
       <h1 style="color: blue">Ingrese el Producto</h1>
       <br />
 
-      <form onsubmit="addProduct(this)">
+      <form class="desactivado" id="formularioAdm" action="/api/productos" method="POST">
         <div class="form-group">
           <label for="nombre"><b>Nombre</b></label>
           <input id="nombre" class="form-control" type="text" name="nombre" />
@@ -24,13 +47,18 @@
         </div>
       </form>
 
-        <h1 style="color: blue">Productos: </h1>
-        <div class="table-responsive">
-            <div class="table table-dark">
-                <ul class="ulTitle"> <li>Nombre</li> <li>Precio</li> <li>Imagen</li> </ul>
-                <div id="productos"/>
-            </div>
+      <h1 style="color: blue">Elimine el Producto</h1>
+      <br />
+      <form class="desactivado" id="formularioAdmDel" action="/api/productos" method="DELETE">
+        <div class="form-group">
+          <label for="precio"><b>Id</b></label>
+          <input id="id" class="form-control" type="number" name="id" />
         </div>
+
+        <div class="row justify-content-between">
+          <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Enviar</button>
+        </div>
+      </form>
 
         {{!-- <form onsubmit="addMessage(this)">
             <input type="email" id="email" placeholder="Tu mail...">
