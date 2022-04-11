@@ -6,12 +6,6 @@
     "id": 1
   },
   {
-    "nombre": "Producto2",
-    "precio": "3125",
-    "imagen": "alfa",
-    "id": 2
-  },
-  {
     "nombre": "Producto3",
     "precio": "1255",
     "imagen": "alfa",
@@ -46,17 +40,5 @@
     "precio": "25552",
     "imagen": "alfa",
     "id": 8
-  },
-  {
-    "nombre": "ProductoID",
-    "precio": "1111111",
-    "imagen": "img",
-    "id": 9
-  },
-  {
-    "nombre": "ProductoPrecio",
-    "precio": 9090,
-    "imagen": "alfa",
-    "id": 10
   }
 ]

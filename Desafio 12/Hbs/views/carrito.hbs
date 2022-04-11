@@ -1,0 +1,25 @@
+<div class="container mt-3">
+    <div class="jumbotron">
+
+    <h1 style="color: blue">Carrito: </h1>
+        <div class="table-responsive">
+            <div class="table table-dark">
+                <ul style="list-style: none;
+                                color: yellow;
+                                display: grid;
+                                grid-template-columns: 1fr 1fr 1fr;"> <li>Nombre</li> <li>Precio</li> <li>Imagen</li> </ul>
+                <div>
+                        {{#each productosCarrito}}
+                    <ul style="list-style: none;
+                                display: grid;
+                                grid-template-columns: 1fr 1fr 1fr;">
+                            <li> {{this.nombre}} </li>
+                            <li> {{this.precio}} </li>
+                            <li> <img src="{{this.imagen}}" alt="No se encontró una imagen valida" width="50px"/> </li>
+                    </ul>
+                        {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

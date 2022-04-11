@@ -12,7 +12,9 @@ const io = new IOServer(httpServer)
 const PORT = 8080
 
 let productos = []
+let productosCarrito = []
 let idProduct = 'a';
+let idCart;
 let productoUnico = []
 
 //establecemos la configuración de handlebars
@@ -31,13 +33,13 @@ app.use(express.static('./public'))
 router.use(express.static('./public'))
 
 // TODOS LOS PRODUCTOS
-router.get('/', (req, res) => {
+router.get('/products', (req, res) => {
   idProduct = req.params.id;
   res.render('formulario', { productos })
 })
 
 // PRODUCTOS POR ID
-router.get('/:id', (req, res) => {
+router.get('/products/:id', (req, res) => {
   idProduct = req.params.id;
   if (!isNaN(idProduct)) {
     if (!productos[idProduct - 1]) {
@@ -54,7 +56,7 @@ router.get('/:id', (req, res) => {
 
 // AGREGAR PRODUCTO
 app.use(bp.urlencoded({ extended: true }));
-router.post('/', (req, res) => {
+router.post('/products', (req, res) => {
   console.log(req.body)
   let obj = req.body
 
@@ -75,14 +77,14 @@ router.post('/', (req, res) => {
     newProduct(obj)
     console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
     console.log('Funcion Loca sale')
-    var route = '/api/productos'
+    var route = '/api/products'
     res.redirect(route)
   }
 })
 
 // EDITAR PRODUCTO
-router.put('/:id', (req, res, next) => {
-  /* let _id = req.params.id;
+router.put('/products/:id', (req, res, next) => {
+  let _id = req.params.id;
   let obj = req.body
   if (!productos[_id - 1]) {
     const error = new Error('Producto no encontrado')
@@ -97,46 +99,120 @@ router.put('/:id', (req, res, next) => {
       error.httpStatuscode = 500
       return next(error)
     } else {
-      for (let i = 0; i < productos.length; i++) {
-        if (productos[i].id == _id) {
-          productos[i] = obj;
-          productos[i].id = parseInt(_id);
+      if (req.headers.auth == 'adm') {
+        for (let i = 0; i < productos.length; i++) {
+          if (productos[i].id == _id) {
+            productos[i] = obj;
+            productos[i].id = parseInt(_id);
+          }
         }
+        const fs = require('fs')
+        fs.writeFileSync('./mensajes.txt', JSON.stringify(productos, null, 2))
+        res.json({ mensaje: 'Se editó correctamente el producto id: ' + _id })
+      } else {
+        const error = new Error('No posee los permisos necesarios para realizar esta accion')
+        error.httpStatuscode = 500
+        return next(error)
       }
-      const fs = require('fs')
-      fs.writeFileSync('./mensajes.txt', JSON.stringify(productos, null, 2))
-      res.json({ mensaje: 'Se editó correctamente el producto id: ' + _id })
     }
-  } */
+  }
 })
 
-// ELIMINAR PRODUCTO
-router.delete('/:id', (req, res) => {
-  console.req(req.header.name)
-  /* let _id = req.params.id;
+// ELIMINAR PRODUCTO - Se le tendrá que enviar un auth = adm para que sepa que sos administrador
+router.delete('/products/:id', (req, res, next) => {
+  console.log(req.headers.auth)
+  let _id = req.params.id;
+   
   if (!productos[_id - 1]) {
     const error = new Error('Producto no encontrado')
     error.httpStatuscode = 500
     return next(error)
   } else {
-    var eliminado = false;
-    var i = 0;
-    while (i < productos.length || eliminado == false) {
-      if (productos[i].id == _id) {
-        productos.pop(productos[i])
- 
-        const fs = require('fs')
-        fs.writeFileSync('./mensajes.txt', JSON.stringify(productos, null, 2))
-        eliminado = true;
+      if (req.headers.auth == 'adm') {
+        var eliminado = false;
+        var i = 0;
+        while (i < productos.length || eliminado == false) {
+          if (productos[i].id == _id) {
+            //productos.pop(productos[i])
+            
+            var newProductos = productos.filter((item) => parseInt(item.id) !== parseInt(_id));
+            console.log(newProductos);
+            
+            productos = newProductos;
+
+            const fs = require('fs')
+            fs.writeFileSync('./mensajes.txt', JSON.stringify(productos, null, 2))
+            eliminado = true;
+          }
+          
+          i++;
+        }
+        res.json({ mensaje: 'Se eliminó correctamente el producto: ' + _id})
+      } else {
+        const error = new Error('No posee los permisos necesarios para realizar esta accion')
+        error.httpStatuscode = 500
+        return next(error)
       }
- 
-      i++;
+  }
+})
+
+/* ------------------- CARRITO ----------------------------------- */
+
+router.get('/carrito/products', (req, res) => {
+  res.render('carrito', { productosCarrito })
+})
+
+router.post('/carrito/products', (req, res) => {
+  
+  let idP
+  let obj
+  for (var key in req.body) {
+    idP = key;
+  }
+
+  for (let i = 0; i < productos.length; i++) {
+    if (productos[i].id == idP) {
+      obj = productos[i];
     }
-    res.json({ mensaje: 'Se eliminó correctamente' })
+  }
+
+    newProductCarrito(obj)
+    console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
+    var route = 'carrito/products'
+    res.redirect(route)
+  
+})
+
+router.post('/carrito', (req, res) => {
+  console.log(req.body.idCarrito)
+  idCart = req.body.idCarrito;
+  var route = 'carrito/products'
+  res.redirect(route)
+
+  /* if (productos.length == 0) {
+    obj.id = 1;
+  } else {
+    obj.id = productos[productos.length - 1].id + 1;
+  }
+
+  if (!obj.nombre
+    || !obj.precio
+    || !obj.imagen) {
+    res.statusCode = 500;
+    res.json({ error: 'Error en el formato, no se pudo cargar el producto' })
+  } else {
+    obj.precio = parseInt(obj.precio);
+    //productos.push(obj)
+    newProduct(obj)
+    console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
+    console.log('Funcion Loca sale')
+    var route = '/api/productos'
+    res.redirect(route)
   } */
 })
 
-app.use('/api/productos', router)
+
+app.use('/api', router)
 
 /* ------------------------------------------------------ */
 /* Server Listen */
@@ -174,9 +250,37 @@ function historial() {
   }
 }
 
+function historialCarrito() {
+  try {
+    const fs = require('fs')
+    const dataFile = fs.readFileSync('./carrito.txt', 'utf-8')
+    productosCarrito = JSON.parse(dataFile)
+  } catch (e) {
+    console.log('No se pudieron obtener los productos.')
+  }
+}
+
 function newProduct(data) {
   save(data)
   io.sockets.emit('productos', productos)
+}
+
+function newProductCarrito(data) {
+  try {
+    const fs = require('fs')
+    const dataFile = fs.readFileSync('./carrito.txt', 'utf-8')
+    productosCarrito = JSON.parse(dataFile)
+    productosCarrito.push(data)
+  } catch (e) {
+    productosCarrito.push(data)
+  }
+
+  try {
+    const fs = require('fs')
+    fs.writeFileSync('./carrito.txt', JSON.stringify(productosCarrito, null, 2))
+  } catch (e) {
+    console.log('El archivo o la ruta no existen.')
+  }
 }
 
 io.on('connection', (socket) => {
@@ -189,6 +293,7 @@ io.on('connection', (socket) => {
     socket.emit('productoId', productoUnico)
   } else {
     socket.emit('productos', historial())
+    historialCarrito()
     socket.on('notificacion', (data) => {
       console.log(data)
     })

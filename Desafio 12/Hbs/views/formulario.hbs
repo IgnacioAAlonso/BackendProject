@@ -9,6 +9,18 @@
             </div>
         </div>
 
+      <h1 style="color: blue">Crear Carrito </h1>
+        <form action="/api/carrito" method="POST">
+          <div class="form-group">
+            <label for="nombre"><b>Id</b></label>
+            <input id="idCarrito" class="form-control" type="text" name="idCarrito" />
+          </div>
+
+          <div class="row justify-content-between">
+            <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Crear</button>
+          </div>
+        </form>
+
       <h1 style="color: blue">Permiso de Administrador</h1>
       <br />
 
@@ -26,7 +38,7 @@
       <h1 style="color: blue">Ingrese el Producto</h1>
       <br />
 
-      <form class="desactivado" id="formularioAdm" action="/api/productos" method="POST">
+      <form class="desactivado" id="formularioAdm" action="/api/products" method="POST">
         <div class="form-group">
           <label for="nombre"><b>Nombre</b></label>
           <input id="nombre" class="form-control" type="text" name="nombre" />
@@ -47,19 +59,6 @@
         </div>
       </form>
 
-      <h1 style="color: blue">Elimine el Producto</h1>
-      <br />
-      <form class="desactivado" id="formularioAdmDel" action="/api/productos" method="DELETE">
-        <div class="form-group">
-          <label for="precio"><b>Id</b></label>
-          <input id="id" class="form-control" type="number" name="id" />
-        </div>
-
-        <div class="row justify-content-between">
-          <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Enviar</button>
-        </div>
-      </form>
-
         {{!-- <form onsubmit="addMessage(this)">
             <input type="email" id="email" placeholder="Tu mail...">
 
@@ -72,9 +71,3 @@
       {{!-- {{ include "some-other-partial.hbs" "path/to/data.json" }} --}}
     </div>
   </div>
-
-<script>
-  function myFunction(evt) {
-    evt.preventDefault();
-  }
-</script>

@@ -13,20 +13,40 @@ window.onload = function () {
             fmDel.classList.add('activado');
         }
     });
+
+    for (var i = 0; i < elBotones.length; i++) {
+        elBotones[i].addEventListener("click", manejarBotones, false)
+    }
+
+    function manejarBotones(e) {
+        e.preventDefault();
+        alert("Has pulsado el botón: " + this.id);
+    }
 }
+
 
 function render(data) {
     const html = data.map((elem, index) => {
         return (`
         <ul class="ulBody">
         <li> ${elem.nombre} </li>
-        <li> ${elem.precio} </td>
-        <li> <img src="${elem.imagen}" alt="No se encontró una imagen valida" width="50px"/> </td>
+        <li> ${elem.precio} </li>
+        <li> <img src="${elem.imagen}" alt="No se encontró una imagen valida" width="50px"/> </li>
+        <li>    <form action="/api/carrito/products" method="POST">
+
+        <div class="form-group">
+          <input id="idP-${elem.id}" style="display:none" class="form-control" type="text" name="${elem.id}" />
+        </div>
+        
+            <div class="row justify-content-between">
+            <button type="submit" class="col-3 btn btn-success mt-3 mb-5">Agregar</button>
+            </div>
+            </form></li>
         </ul>
             `)
     }).join(" ");
-    document
-        .getElementById('productos').innerHTML = html;
+    document.getElementById('productos').innerHTML = html;
+
 }
 
 /*
@@ -41,6 +61,7 @@ function render2(data) {
 } */
 socket.on('productos', function (data) { render(data) })
 socket.on('productoId', function (data) { render(data) })
+socket.on('productoCarrito', function (data) { render(data) })
 /* socket.on('messages', function (data) { render2(data) }) */
 
 /* function addProduct(e) {
