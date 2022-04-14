@@ -1,7 +1,7 @@
   <div class="container mt-3">
     <div class="jumbotron">
 
-      <h1 style="color: blue">Productos: </h1>
+      <h1 style="color: #ff0066">Productos: </h1>
         <div class="table-responsive">
             <div class="table table-dark">
                 <ul class="ulTitle"> <li>Nombre</li> <li>Precio</li> <li>Imagen</li> </ul>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-      <h1 style="color: blue">Crear Carrito </h1>
+      <h4 style="color: #039e72">Crear Carrito </h4>
         <form action="/api/carrito" method="POST">
           <div class="form-group">
             <label for="nombre"><b>Id</b></label>
@@ -21,7 +21,7 @@
           </div>
         </form>
 
-      <h1 style="color: blue">Permiso de Administrador</h1>
+      <h3 style="color: #77a200">Permiso de Administrador</h3>
       <br />
 
       <form id="formularioPrueba" onsubmit="permisosAdm(this)">
@@ -35,7 +35,7 @@
         </div>
       </form>
 
-      <h1 style="color: blue">Ingrese el Producto</h1>
+      <h3 class="desactivado" style="color: blue">Ingrese el Producto</h3>
       <br />
 
       <form class="desactivado" id="formularioAdm" action="/api/products" method="POST">
@@ -45,8 +45,23 @@
         </div>
 
         <div class="form-group">
+          <label for="descripcion"><b>Descripción</b></label>
+          <input id="descripcion" class="form-control" type="text" name="descripcion" />
+        </div>
+
+        <div class="form-group">
           <label for="precio"><b>Precio</b></label>
           <input id="precio" class="form-control" type="number" name="precio" />
+        </div>
+
+        <div class="form-group">
+          <label for="codigo"><b>Código</b></label>
+          <input id="codigo" class="form-control" type="number" name="codigo" />
+        </div>
+
+        <div class="form-group">
+          <label for="stock"><b>Stock</b></label>
+          <input id="stock" class="form-control" type="number" name="stock" />
         </div>
 
         <div class="form-group">

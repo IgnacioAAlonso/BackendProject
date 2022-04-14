@@ -40,5 +40,15 @@
     "precio": "25552",
     "imagen": "alfa",
     "id": 8
+  },
+  {
+    "nombre": "Producto Completo",
+    "descripcion": "Es un Producto completo",
+    "precio": 10,
+    "codigo": 222,
+    "stock": 10,
+    "imagen": "https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg",
+    "id": 9,
+    "timestamp": 1649947130844
   }
 ]

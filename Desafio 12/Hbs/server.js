@@ -13,6 +13,7 @@ const PORT = 8080
 
 let productos = []
 let productosCarrito = []
+let carrito;
 let idProduct = 'a';
 let idCart;
 let productoUnico = []
@@ -62,17 +63,24 @@ router.post('/products', (req, res) => {
 
   if (productos.length == 0) {
     obj.id = 1;
+    obj.timestamp = Date.now()
   } else {
     obj.id = productos[productos.length - 1].id + 1;
+    obj.timestamp = Date.now()
   }
 
   if (!obj.nombre
+    || !obj.descripcion
+    || !obj.codigo
     || !obj.precio
+    || !obj.stock
     || !obj.imagen) {
     res.statusCode = 500;
     res.json({ error: 'Error en el formato, no se pudo cargar el producto' })
   } else {
     obj.precio = parseInt(obj.precio);
+    obj.codigo = parseInt(obj.codigo);
+    obj.stock = parseInt(obj.stock);
     //productos.push(obj)
     newProduct(obj)
     console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
@@ -92,9 +100,13 @@ router.put('/products/:id', (req, res, next) => {
     return next(error)
   } else {
     if (!obj.nombre
+      || !obj.descripcion
+      || !obj.codigo
       || !obj.precio
+      || !obj.stock
       || !obj.imagen
-      || obj.id) {
+      || obj.id
+      || obj.timestamp) {
       const error = new Error('Error en el formato, no se pudo cargar el producto')
       error.httpStatuscode = 500
       return next(error)
@@ -104,6 +116,7 @@ router.put('/products/:id', (req, res, next) => {
           if (productos[i].id == _id) {
             productos[i] = obj;
             productos[i].id = parseInt(_id);
+            productos[i].timestamp = Date.now();
           }
         }
         const fs = require('fs')
@@ -157,11 +170,12 @@ router.delete('/products/:id', (req, res, next) => {
 })
 
 /* ------------------- CARRITO ----------------------------------- */
-
+// CARRITO
 router.get('/carrito/products', (req, res) => {
   res.render('carrito', { productosCarrito })
 })
 
+// AGREGAR AL CARRITO
 router.post('/carrito/products', (req, res) => {
   
   let idP
@@ -183,32 +197,59 @@ router.post('/carrito/products', (req, res) => {
   
 })
 
+// CREAR CARRITO
 router.post('/carrito', (req, res) => {
   console.log(req.body.idCarrito)
   idCart = req.body.idCarrito;
+  fecha = Date.now()
+  carrito = {idCart,
+            fecha,
+            productosCarrito}
   var route = 'carrito/products'
   res.redirect(route)
+})
 
-  /* if (productos.length == 0) {
-    obj.id = 1;
+// ELIMINAR PRODUCTO DEL CARRITO
+router.delete('/carrito/products/:id', (req, res, next) => {
+  
+  let _id = req.params.id;
+   
+  if (!productosCarrito[_id - 1]) {
+    const error = new Error('Producto no encontrado')
+    error.httpStatuscode = 500
+    return next(error)
   } else {
-    obj.id = productos[productos.length - 1].id + 1;
+        var eliminado = false;
+        var i = 0;
+        while (i < productosCarrito.length || eliminado == false) {
+          if (productosCarrito[i].id == _id) {
+            //productos.pop(productos[i])
+            
+            var newProductos = productosCarrito.filter((item) => parseInt(item.id) !== parseInt(_id));
+            console.log(newProductos);
+            
+            productosCarrito = newProductos;
+
+            const fs = require('fs')
+            fs.writeFileSync('./carrito.txt', JSON.stringify(productosCarrito, null, 2))
+            eliminado = true;
+          }
+          
+          i++;
+        }
+        res.json({ mensaje: 'Se eliminó correctamente el producto: ' + _id})
   }
+})
 
-  if (!obj.nombre
-    || !obj.precio
-    || !obj.imagen) {
-    res.statusCode = 500;
-    res.json({ error: 'Error en el formato, no se pudo cargar el producto' })
-  } else {
-    obj.precio = parseInt(obj.precio);
-    //productos.push(obj)
-    newProduct(obj)
-    console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
-    console.log('Funcion Loca sale')
-    var route = '/api/productos'
-    res.redirect(route)
-  } */
+// ELIMINAR CARRITO
+router.delete('/carrito/products', (req, res, next) => {
+        productosCarrito = [];
+
+        const fs = require('fs')
+        fs.writeFileSync('./carrito.txt', JSON.stringify(productosCarrito, null, 2))
+        eliminado = true;
+
+        res.json({ mensaje: 'Se eliminó correctamente el carrito.'})
 })
 
 
