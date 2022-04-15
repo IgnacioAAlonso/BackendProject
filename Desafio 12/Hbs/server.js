@@ -4,12 +4,16 @@ const bp = require('body-parser')
 const router = express.Router()
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
-
+const { options } = require('./options/mariaDB')
+const { optionsLite } = require('./options/sqlite3')
+const Contenedor = require('./Clases/SQLBase.js')
 
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
 const PORT = 8080
+const contenedorMBD = new Contenedor(options)
+const contenedorLite = new Contenedor(optionsLite)
 
 let productos = []
 let productosCarrito = []
@@ -18,6 +22,14 @@ let idProduct = 'a';
 let idCart;
 let productoUnico = []
 
+//contenedorLite.createTabla('mensajes');
+const mensaje = {
+  texto: '<strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>'
+}
+
+//contenedorLite.cargarProducto('mensajes', mensaje);
+contenedorLite.verTabla('mensajes');
+/*
 //establecemos la configuración de handlebars
 app.engine(
   'hbs',
@@ -170,6 +182,8 @@ router.delete('/products/:id', (req, res, next) => {
 })
 
 /* ------------------- CARRITO ----------------------------------- */
+
+/*
 // CARRITO
 router.get('/carrito/products', (req, res) => {
   res.render('carrito', { productosCarrito })
@@ -257,6 +271,8 @@ app.use('/api', router)
 
 /* ------------------------------------------------------ */
 /* Server Listen */
+
+/*
 httpServer.listen(PORT, () => {
   console.log(`Servidor levantado`)
 })
@@ -326,7 +342,7 @@ function newProductCarrito(data) {
 
 io.on('connection', (socket) => {
   console.log('se conecto un usuario')
-  /* socket.emit('productos', productos) */
+  
   console.log(idProduct)
   if (!isNaN(idProduct)) {
     console.log('Estoy viendo un Producto')
@@ -343,6 +359,7 @@ io.on('connection', (socket) => {
   /* socket.on('new-message', (data) => {
     save(data)
     io.sockets.emit('messages', messages.reverse())
-  }) */
-
+  }) 
+  
 })
+*/
