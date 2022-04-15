@@ -22,14 +22,14 @@ let idProduct = 'a';
 let idCart;
 let productoUnico = []
 
-//contenedorLite.createTabla('mensajes');
+/* contenedorLite.createTabla('mensajes');
 const mensaje = {
   texto: '<strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>'
 }
 
-//contenedorLite.cargarProducto('mensajes', mensaje);
-contenedorLite.verTabla('mensajes');
-/*
+contenedorLite.cargarProducto('mensajes', mensaje);
+contenedorLite.verTabla('mensajes'); */
+
 //establecemos la configuración de handlebars
 app.engine(
   'hbs',
@@ -183,7 +183,6 @@ router.delete('/products/:id', (req, res, next) => {
 
 /* ------------------- CARRITO ----------------------------------- */
 
-/*
 // CARRITO
 router.get('/carrito/products', (req, res) => {
   res.render('carrito', { productosCarrito })
@@ -272,7 +271,7 @@ app.use('/api', router)
 /* ------------------------------------------------------ */
 /* Server Listen */
 
-/*
+
 httpServer.listen(PORT, () => {
   console.log(`Servidor levantado`)
 })
@@ -361,5 +360,5 @@ io.on('connection', (socket) => {
     io.sockets.emit('messages', messages.reverse())
   }) 
   
+  */
 })
-*/
