@@ -22,7 +22,10 @@ let idProduct = 'a';
 let idCart;
 let productoUnico = []
 
-/* contenedorLite.createTabla('mensajes');
+/* 
+contenedorLite.verTabla('mensajes'); 
+contenedorMBD.createTabla('products');
+
 const mensaje = {
   texto: '<strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>'
 }
@@ -289,6 +292,7 @@ function save(data) {
   try {
     const fs = require('fs')
     fs.writeFileSync('./mensajes.txt', JSON.stringify(productos, null, 2))
+    contenedorMBD.cargarProducto('products', data);
   } catch (e) {
     console.log('El archivo o la ruta no existen.')
   }
@@ -299,6 +303,7 @@ function historial() {
     const fs = require('fs')
     const dataFile = fs.readFileSync('./mensajes.txt', 'utf-8')
     productos = JSON.parse(dataFile)
+    /* productos = contenedorLite.verTabla('products'); */ 
     return productos
   } catch (e) {
     console.log('No se pudieron obtener los productos.')
@@ -339,6 +344,39 @@ function newProductCarrito(data) {
   }
 }
 
+function saveMensajes(data) {
+  try {
+    const fs = require('fs')
+    const dataFile = fs.readFileSync('./conversacion.txt', 'utf-8')
+    messages = JSON.parse(dataFile)
+    messages.push(data)
+
+  } catch (e) {
+    messages.push(data)
+  }
+
+  try {
+    const fs = require('fs')
+    fs.writeFileSync('./conversacion.txt', JSON.stringify(messages, null, 2))
+    contenedorLite.cargarProducto('mensajes', data);
+  } catch (e) {
+      console.log('El archivo o la ruta no existen.')
+  }
+}
+
+function historialMensajes() {
+  try {
+      const fs = require('fs')
+      const dataFile = fs.readFileSync('./conversacion.txt', 'utf-8')
+      messages = JSON.parse(dataFile)
+      cargo = false;
+      return messages.reverse();
+  } catch (e) {
+      console.log('No se pudieron obtener los productos.')
+      return messages;
+  }
+}
+
 io.on('connection', (socket) => {
   console.log('se conecto un usuario')
   
@@ -349,16 +387,15 @@ io.on('connection', (socket) => {
     socket.emit('productoId', productoUnico)
   } else {
     socket.emit('productos', historial())
+    socket.emit('messages', historialMensajes())
     historialCarrito()
     socket.on('notificacion', (data) => {
       console.log(data)
     })
   }
 
-  /* socket.on('new-message', (data) => {
-    save(data)
+  socket.on('new-message', (data)=>{
+    saveMensajes(data)
     io.sockets.emit('messages', messages.reverse())
-  }) 
-  
-  */
+  })
 })

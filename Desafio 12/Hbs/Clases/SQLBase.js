@@ -33,14 +33,15 @@ class Contenedor {
         knex(_nombre)
         .select('*')
         .then((rows) => {
-            /* for(r of rows){
+            /* rows.forEach(r => {
                 console.log(`${r['id']} ${r['texto']}`)
-            } */
-            rows.forEach(r => {
-                console.log(`${r['id']} ${r['texto']}`)
-            });
+            }); */
+            return rows;
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err) 
+            return null
+        }) 
         .finally(() => knex.destroy)
     }
 }

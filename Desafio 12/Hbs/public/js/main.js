@@ -49,8 +49,6 @@ function render(data) {
 
 }
 
-/*
-
 function render2(data) {
     const html = data.map((elem, index) => {
         return (`<div>
@@ -58,11 +56,12 @@ function render2(data) {
         </div>`)
     }).join(" ");
     document.getElementById('mensajes').innerHTML = html;
-} */
+}
+
 socket.on('productos', function (data) { render(data) })
 socket.on('productoId', function (data) { render(data) })
 socket.on('productoCarrito', function (data) { render(data) })
-/* socket.on('messages', function (data) { render2(data) }) */
+socket.on('messages', function (data) { render2(data) })
 
 /* function addProduct(e) {
     const mensaje = {
@@ -86,7 +85,7 @@ function permisosAdm(e) {
     // return false
 }
 
-/* function addMessage(e) {
+function addMessage(e) {
     var e = document.getElementById('email').value;
     if (e) {
         var currentdate = new Date();
@@ -97,4 +96,4 @@ function permisosAdm(e) {
         socket.emit('new-message', mensaje)
     }
     return false
-} */
+}

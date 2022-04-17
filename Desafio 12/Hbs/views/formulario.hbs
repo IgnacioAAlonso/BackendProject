@@ -9,6 +9,15 @@
             </div>
         </div>
 
+      <form onsubmit="addMessage(this)">
+            <input type="email" id="email" placeholder="Tu mail...">
+
+            <div class="mensajes" id="mensajes"></div>
+
+            <input type="text" id="texto" placeholder="Tu comentario...">
+            <input type="submit" value="Enviar">
+      </form>
+
       <h4 style="color: #039e72">Crear Carrito </h4>
         <form action="/api/carrito" method="POST">
           <div class="form-group">
