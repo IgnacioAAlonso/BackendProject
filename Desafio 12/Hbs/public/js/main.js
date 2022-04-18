@@ -26,6 +26,8 @@ window.onload = function () {
 
 
 function render(data) {
+    console.log(data)
+    console.log("Aca estoy")
     const html = data.map((elem, index) => {
         return (`
         <ul class="ulBody">

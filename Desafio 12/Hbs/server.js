@@ -16,6 +16,7 @@ const contenedorMBD = new Contenedor(options)
 const contenedorLite = new Contenedor(optionsLite)
 
 let productos = []
+let messages = []
 let productosCarrito = []
 let carrito;
 let idProduct = 'a';
@@ -23,12 +24,27 @@ let idCart;
 let productoUnico = []
 
 /* 
+const products = 
+  {
+    "nombre": "Producto Completo",
+    "descripcion": "Es un Producto completo",
+    "precio": 10,
+    "codigo": 222,
+    "stock": 10,
+    "imagen": "https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg",
+    "timestamp": 1649947130844
+  }
+
+  
+  contenedorMBD.cargarProducto('products', products);
+  contenedorMBD.createTablaProducts('products');
 contenedorLite.verTabla('mensajes'); 
-contenedorMBD.createTabla('products');
 
 const mensaje = {
   texto: '<strong style=\"color: blue\">ignacioanacional@gmail.com</strong> <TT style=\"color: brown\">( 30/3/2022 23:32:28 ):</TT>\n            <I style=\"color: green\"> holi </I>'
 }
+
+
 
 contenedorLite.cargarProducto('mensajes', mensaje);
 contenedorLite.verTabla('mensajes'); */
@@ -77,10 +93,10 @@ router.post('/products', (req, res) => {
   let obj = req.body
 
   if (productos.length == 0) {
-    obj.id = 1;
+    //obj.id = 1;
     obj.timestamp = Date.now()
   } else {
-    obj.id = productos[productos.length - 1].id + 1;
+    //obj.id = productos[productos.length - 1].id + 1;
     obj.timestamp = Date.now()
   }
 
@@ -99,7 +115,6 @@ router.post('/products', (req, res) => {
     //productos.push(obj)
     newProduct(obj)
     console.log({ mensaje: 'Se agregó correctamente el producto id: ' + obj.id })
-    console.log('Funcion Loca sale')
     var route = '/api/products'
     res.redirect(route)
   }
@@ -299,16 +314,29 @@ function save(data) {
 }
 
 function historial() {
-  try {
-    const fs = require('fs')
+
+  return contenedorMBD.verTabla('products')
+    .then((v) => {
+      productos = v
+      return v
+    })
+
+  //return productos
+  
+  //try {
+    /* const fs = require('fs')
     const dataFile = fs.readFileSync('./mensajes.txt', 'utf-8')
-    productos = JSON.parse(dataFile)
-    /* productos = contenedorLite.verTabla('products'); */ 
-    return productos
-  } catch (e) {
-    console.log('No se pudieron obtener los productos.')
-    return productos;
-  }
+    productos = JSON.parse(dataFile) */
+    
+    /* console.log("PASO 1")
+    productos = contenedorMBD.verTabla('products') 
+    console.log("PASO 3") 
+    */
+
+ // } catch (e) {
+   // console.log('No se pudieron obtener los productos.')
+    //return productos;
+  //}
 }
 
 function historialCarrito() {
@@ -317,7 +345,7 @@ function historialCarrito() {
     const dataFile = fs.readFileSync('./carrito.txt', 'utf-8')
     productosCarrito = JSON.parse(dataFile)
   } catch (e) {
-    console.log('No se pudieron obtener los productos.')
+    console.log('No se pudo obtener el carrito.')
   }
 }
 
@@ -372,7 +400,7 @@ function historialMensajes() {
       cargo = false;
       return messages.reverse();
   } catch (e) {
-      console.log('No se pudieron obtener los productos.')
+      console.log('No se pudieron obtener los mensajes.')
       return messages;
   }
 }
@@ -386,7 +414,7 @@ io.on('connection', (socket) => {
     console.log(productoUnico)
     socket.emit('productoId', productoUnico)
   } else {
-    socket.emit('productos', historial())
+    historial().then(() => socket.emit('productos', productos))
     socket.emit('messages', historialMensajes())
     historialCarrito()
     socket.on('notificacion', (data) => {
