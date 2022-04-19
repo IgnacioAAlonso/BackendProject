@@ -373,7 +373,9 @@ function newProductCarrito(data) {
 }
 
 function saveMensajes(data) {
-  try {
+  messages.push(data)
+  contenedorLite.cargarProducto('mensajes', data);
+  /* try {
     const fs = require('fs')
     const dataFile = fs.readFileSync('./conversacion.txt', 'utf-8')
     messages = JSON.parse(dataFile)
@@ -389,11 +391,16 @@ function saveMensajes(data) {
     contenedorLite.cargarProducto('mensajes', data);
   } catch (e) {
       console.log('El archivo o la ruta no existen.')
-  }
+  } */
 }
 
 function historialMensajes() {
-  try {
+  return contenedorLite.verTabla('mensajes')
+    .then((m) => {
+      messages = m
+      return m
+    })
+  /* try {
       const fs = require('fs')
       const dataFile = fs.readFileSync('./conversacion.txt', 'utf-8')
       messages = JSON.parse(dataFile)
@@ -402,7 +409,7 @@ function historialMensajes() {
   } catch (e) {
       console.log('No se pudieron obtener los mensajes.')
       return messages;
-  }
+  } */
 }
 
 io.on('connection', (socket) => {
@@ -415,7 +422,8 @@ io.on('connection', (socket) => {
     socket.emit('productoId', productoUnico)
   } else {
     historial().then(() => socket.emit('productos', productos))
-    socket.emit('messages', historialMensajes())
+    historialMensajes().then(() => socket.emit('messages', messages))
+    /* socket.emit('messages', historialMensajes()) */
     historialCarrito()
     socket.on('notificacion', (data) => {
       console.log(data)
